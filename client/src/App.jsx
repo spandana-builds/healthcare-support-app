@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 export default function App() {
   const [form, setForm] = useState({
@@ -25,13 +26,9 @@ export default function App() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const text = `Patient ${form.name} (Age ${form.age}) reports "${form.symptoms}". 
-Contact: ${form.contact}. 
-Volunteer support: ${form.volunteer ? "Requested" : "Not requested"}.`;
+    const text = `Patient ${form.name} (Age ${form.age}) reports "${form.symptoms}". Contact: ${form.contact}. Volunteer support: ${form.volunteer ? "Requested" : "Not requested"}.`;
 
     setSummary(text);
-
-    // ✅ automation feature — save last case
     localStorage.setItem("lastPatient", text);
   }
 
@@ -43,9 +40,7 @@ Volunteer support: ${form.volunteer ? "Requested" : "Not requested"}.`;
 
       const res = await fetch("http://localhost:5000/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: chatInput }),
       });
 
@@ -58,88 +53,108 @@ Volunteer support: ${form.volunteer ? "Requested" : "Not requested"}.`;
     }
   }
 
+  const lastSaved = localStorage.getItem("lastPatient");
+
   return (
-    <div style={{ padding: 30, fontFamily: "Arial" }}>
-      <h1>Healthcare Support Helper</h1>
+    <div className="container">
 
-      <p>
-        This tool helps NGOs quickly collect patient support requests
-        and provide instant AI-based guidance.
-      </p>
+      <h1 className="title">Healthcare Support Helper</h1>
+      <p className="subtitle">NGO support intake + AI FAQ assistant</p>
 
-      {/* FORM */}
-      <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
-        <input
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          required
-        />
-        <br /><br />
+      {/* INFO BANNER */}
+      <div style={{
+        background: "#e8f6f6",
+        padding: "6px 10px",
+        borderRadius: 6,
+        marginBottom: 8,
+        fontSize: 12
+      }}>
+        AI-assisted NGO healthcare intake + FAQ assistant
+      </div>
 
-        <input
-          name="age"
-          type="number"
-          min="0"
-          placeholder="Age"
-          onChange={handleChange}
-          required
-        />
-        <br /><br />
+      {/* TWO COLUMN GRID */}
+      <div className="twoCol">
 
-        <textarea
-          name="symptoms"
-          placeholder="Symptoms"
-          onChange={handleChange}
-          required
-        />
-        <br /><br />
+        {/* LEFT COLUMN */}
+        <div>
 
-        <input
-          name="contact"
-          placeholder="Contact Number"
-          pattern="[0-9]{10}"
-          title="Enter 10 digit number"
-          onChange={handleChange}
-          required
-        />
-        <br /><br />
+          <div className="card">
+            <h3>Patient Support Form</h3>
 
-        <label>
-          <input
-            type="checkbox"
-            name="volunteer"
-            onChange={handleChange}
-          />
-          Need volunteer help
-        </label>
+            <form onSubmit={handleSubmit}>
+              <input name="name" placeholder="Name" onChange={handleChange} required />
+              <br />
 
-        <br /><br />
-        <button type="submit">Submit</button>
-      </form>
+              <input name="age" type="number" min="0" placeholder="Age" onChange={handleChange} required />
+              <br />
 
-      {/* SUMMARY */}
-      {summary && (
-        <div style={{ marginTop: 20 }}>
-          <h3>Auto Summary</h3>
-          <p>{summary}</p>
+              <textarea name="symptoms" placeholder="Symptoms" onChange={handleChange} required />
+              <br />
+
+              <input
+                name="contact"
+                placeholder="Contact Number"
+                pattern="[0-9]{10}"
+                title="Enter 10 digit number"
+                onChange={handleChange}
+                required
+              />
+              <br />
+
+              <label className="checkRow">
+                  <input
+                    type="checkbox"
+                    name="volunteer"
+                    onChange={handleChange}
+                  />
+                  Need volunteer help
+                </label>
+
+              
+
+              <br />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+
+          {summary && (
+            <div className="card summaryBox">
+              <h3>Auto Summary</h3>
+              <p>{summary}</p>
+            </div>
+          )}
+
+          {lastSaved && (
+            <div className="card">
+              <h3>Last Saved</h3>
+              <p>{lastSaved}</p>
+            </div>
+          )}
+
         </div>
-      )}
 
-      {/* AI CHATBOT */}
-      <div style={{ marginTop: 40 }}>
-        <h3>AI Health FAQ Chatbot</h3>
+        {/* RIGHT COLUMN — CHATBOT */}
+        <div className="card">
+          <h3>AI Health FAQ Chatbot</h3>
 
-        <input
-          value={chatInput}
-          onChange={(e) => setChatInput(e.target.value)}
-          placeholder="Ask a health question..."
-        />
+          <div className="chatRow">
+            <input
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+              placeholder="Ask a health question..."
+            />
+            <button onClick={handleChat}>Ask</button>
+          </div>
 
-        <button onClick={handleChat}>Ask AI</button>
+          {loading && <p>Thinking...</p>}
 
-        {loading && <p>Thinking...</p>}
-        {chatReply && <p><b>AI:</b> {chatReply}</p>}
+          {chatReply && (
+            <div className="aiReply">
+              <b>AI:</b> {chatReply}
+            </div>
+          )}
+        </div>
+
       </div>
     </div>
   );

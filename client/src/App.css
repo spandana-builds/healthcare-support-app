@@ -1,42 +1,158 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* ===== BASE ===== */
+
+body {
+  margin: 0;
+  background: #f4f7f8;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ===== CONTAINER ===== */
+
+.container {
+  max-width: 1100px;
+  margin: 24px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-sizing: border-box;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ===== HEADER ===== */
+
+.title {
+  color: #1b6b6f;
+  margin: 0 0 4px 0;
+  font-size: 26px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.subtitle {
+  color: #555;
+  margin: 0 0 14px 0;
+  font-size: 14px;
 }
+
+/* ===== INFO BANNER ===== */
+
+.container > div:first-of-type {
+  margin-bottom: 14px;
+}
+
+/* ===== GRID ===== */
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ===== CARD ===== */
 
 .card {
-  padding: 2em;
+  background: #f9fbfb;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid #e3ecec;
 }
 
-.read-the-docs {
-  color: #888;
+.card h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+}
+
+/* ===== FORM CONTROLS ===== */
+
+.card form > input,
+.card form > textarea {
+  margin-bottom: 12px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccd6d6;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #1b6b6f;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* ===== CHECKBOX ROW ===== */
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin: 6px 0 14px 0;
+}
+
+.checkRow input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+/* ===== BUTTON ===== */
+
+button {
+  background: #1b6b6f;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #155356;
+}
+
+.card form button {
+  margin-top: 4px;
+}
+
+/* ===== SUMMARY ===== */
+
+.summaryBox {
+  background: #e8f6f6;
+  border-left: 5px solid #1b6b6f;
+}
+
+/* ===== CHAT ===== */
+
+.chatRow {
+  display: flex;
+  gap: 10px;
+}
+
+.chatRow input {
+  flex: 1;
+}
+
+.aiReply {
+  margin-top: 12px;
+  background: #eef3ff;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid #4a6cff;
+  font-size: 14px;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
 }
