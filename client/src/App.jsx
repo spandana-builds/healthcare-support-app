@@ -36,9 +36,11 @@ export default function App() {
     if (!chatInput) return;
 
     try {
-      setLoading(true);
+      setLoading(true); 
+      
+      //http://localhost:5000/api/chat
 
-      const res = await fetch("http://localhost:5000/api/chat", {
+      const res = await fetch("https://healthcare-support-app.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: chatInput }),
@@ -124,12 +126,7 @@ export default function App() {
             </div>
           )}
 
-          {lastSaved && (
-            <div className="card">
-              <h3>Last Saved</h3>
-              <p>{lastSaved}</p>
-            </div>
-          )}
+          
 
         </div>
 
